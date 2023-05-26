@@ -1,6 +1,15 @@
 #+title: Epidemic model predictor
-
+#+options: tex:t
 * Introduction:
 This project serves as a _tool_ for medical professionals, who can use it to determine the rate of growth of a disease, *say an epidemic*.
 
 It /optionally/ accepts parameters such as population (/young/ and /old/), birth rate and  death rate as _population variables_. It receives _disease_ input such as /rate of infection/, /recovery rate/ and /incubation period/ for the vaccine.
+
+
+
+
+
+* Formulae
+#+begin_export latex
+Infected{\ }Population _{d\ days} = no_{infected} {\ } \times {\ } (transmission{\ }rate)^{d-Incubation{\ }period} {\ }\times {\ } (1-rate_{recovery})^{d-Incubation{\ }period - n} {\ } \times {\ } \frac{pop_{younger}*infRate_{younger} + pop_{older}*infRate_{older}}{Rate_{contact}\times100}
+#+end_export
