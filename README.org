@@ -3,13 +3,53 @@
 * Introduction:
 This project serves as a _tool_ for medical professionals, who can use it to determine the rate of growth of a disease, *say an epidemic*.
 
-It /optionally/ accepts parameters such as population (/young/ and /old/), birth rate and  death rate as _population variables_. It receives _disease_ input such as /rate of infection/, /recovery rate/ and /incubation period/ for the vaccine.
+A _disease model_ is a /mathematical representation/ of the spread of an infectious disease. It can be used to understand how a disease spreads, predict the number of people who will be infected, and evaluate the effectiveness of interventions like vaccination.
+
+It /optionally/ accepts parameters such as population (/young/ and /old/ percentages), birth rate and death rate as _population variables_. It receives _disease_ input such as /rate of infection/, /recovery rate/ and /incubation period/ for the vaccine.
 
 
 
-
+* Terms used in the program
+*** Population variables:
+**** Total population ~Pop~
+**** Younger and older population ~Pop1~, ~Pop2~
+**** Adult population ~Pop2~ := ~Pop~ - ~Pop1~
+**** Birth rate ~birthRate~
+**** Death rate ~deathRate~
+**** Population growth ~PopGrowth~
+*** Disease variables:
+**** Number of infected people on day 1 ~Inf~
+**** Transmission rate ~transRate~
+**** Recovery rate ~recRate~
+**** Contact rate ~contRate~
+**** Incubation period ~incubPrd~
+**** Number of days after being infected when people isolate themselves ~n~
+*** Vaccination variables:
+**** Number of days after the first attack when the vaccine takes effect ~d~
+**** Efficiency of the vaccine ~η~
+**** Rate of vaccination (Rv) ~ρ~
 
 * Formulae
 #+begin_export latex
 Infected{\ }Population _{d\ days} = no_{infected} {\ } \times {\ } (transmission{\ }rate)^{d-Incubation{\ }period} {\ }\times {\ } (1-rate_{recovery})^{d-Incubation{\ }period - n} {\ } \times {\ } \frac{pop_{younger}*infRate_{younger} + pop_{older}*infRate_{older}}{Rate_{contact}\times100}
 #+end_export
+
+#+begin_export latex
+Recovered pop after $d+Vac$ days: $(Rec_d) := (Inf\times(Tr^{Vac-Ip})\times(1-Rr)^{Vac-Ip-n}\times((Pop1\times x/100)+(pop2\times y/100)/Cr))\times(Eff^d)+(Rv\times(d+Vac))$
+#+end_export
+
+#+begin_src  latex
+Infected population after $n$ days =  $(Inf_d)$ - $(Rec_d)$
+#+end_src
+
+#+begin_export latex
+Days for the disease to take over: $Inf_d$ := $Pop$ + \frac{Pop\times Pop_{growth}\times d}{365} - \frac{death_{rate}\times Pop\times d}{365}
+#+end_export
+
+#+begin_src latex
+No of days for complete recovery: $(Inf_d)$ := $(Rec_d)$
+#+end_src
+
+#+begin_comment
+We're assuming that the disease leaves as quickly as it comes!!!
+#+end_comment
