@@ -1,0 +1,6 @@
+#+title: Epidemic model predictor
+
+* Introduction:
+This project serves as a _tool_ for medical professionals, who can use it to determine the rate of growth of a disease, *say an epidemic*.
+
+It /optionally/ accepts parameters such as population (/young/ and /old/), birth rate and  death rate as _population variables_. It receives _disease_ input such as /rate of infection/, /recovery rate/ and /incubation period/ for the vaccine.
