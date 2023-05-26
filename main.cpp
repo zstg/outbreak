@@ -20,7 +20,7 @@ int main(){
 	pV.deathRate = 9.64;
 	cout << pV.ratePerDay() << endl;
 	cout << pV.dthDayPop(2*365)<< endl;
-	// cout << pV.dthDayPop(2*365) << endl; // doesn't work??
+	// cout << pV.dthDayPop(2*365) << endl; 
 
 
 }
