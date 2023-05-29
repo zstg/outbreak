@@ -32,8 +32,7 @@ public:
             totalDays += daysInMonth[i - 1];
         totalDays += day;
         
-        double popRatio;
-        popRatio = (double)(getFinalPopulation()/ (double)initialPopulation);
+        double popRatio = (double)(getFinalPopulation()/ (double)initialPopulation);
 
         double ratePerDay = 365 * (pow((double)(getFinalPopulation()/ (double)initialPopulation), 0.00273972603) -1); // this float is 1.0/365
         return initialPopulation *pow((1+ratePerDay/365.0), totalDays);
@@ -93,11 +92,28 @@ int main() {
     v.iso = 1;
     v.rateVac = 100;
     v.contactRate = 5;
-    //cout << setprecision(10) << (double)v.infectedPplAfterNDays(15);
-    cout << (double)v.recoveredPplAfterNVacDays(15,2);
-    //diseaseVars(4,0.87,0.98,1.2,3);
-    
+    cout << fixed << setprecision(10) << (double)v.infectedPplAfterNDays(15)<<endl;
+    cout << v.recoveredPplAfterNVacDays(15,2)<<endl;
+
+
+    cout << endl;    
 }    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     /*
     // Example usage
     popVars population(1428000000,16.42,9.64);
