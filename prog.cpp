@@ -6,12 +6,12 @@ using namespace std;
 
 class popVars {
 protected:
-    float initialPopulation;
+    int initialPopulation;
     double birthRate;
     double deathRate;
 
 public:
-    popVars(float initialPop, double birthR, double deathR) {
+    popVars(int initialPop, double birthR, double deathR) {
         initialPopulation = initialPop;
         birthRate = birthR;
         deathRate = deathR;
@@ -78,25 +78,49 @@ class vacVars:public diseaseVars {
     }
 };
 
-int main() {
+
+int prompt(){
+        vacVars v;
+        cout << "Enter the number of people who are infected on day 1 of the epidemic: ";
+        cin >> v.infectedPeopleDay1;
+        // default args -> for stuff like population
+        //v.infectedPeopleDay1 = 5000; // large amt of ppl get infected in a single day
+        cout << "Enter the transmission rate: "; cin >> v.transmissionRate;
+        //v.transmissionRate = 0.3; // low transmission rate
+        cout << "Enter the recovery rate: "; cin >> v.recoveryRate;
+        //v.recoveryRate = 0.2;
+        cout << "Enter the incubation period: "; // only after the person has caught the disease PLUS incubation period will they show symptoms/isolate
+        cin >> v.incubationPeriod;
+        //v.incubationPeriod = 3;
+        cout << "Enter the efficiency of the vaccine: "; cin >> v.efficiency;
+        // v.efficiency = 50;
+        cout << "After how many days was the vaccine invented? "; cin >> v.vac;
+        // v.vac = 21;
+        cout << "After how many days do personnel isolate themselves? "; cin >> v.iso;
+        // v.iso = 1;
+        cout << "Enter rate of vaccination: "; cin >> v.rateVac;
+        v.rateVac = 100;
+        cout << "Enter contact rate: "; cin >> v.contactRate;
+        v.contactRate = 5;
+        
+        // return all results
+}
+
+int main(){
     //class diseaseVars d(4,0.87,0.98,1.2,3);
     class vacVars v; 
-    // default args -> for stuff like population
-    v.infectedPeopleDay1 = 5000; // large amt of ppl get infected in a single day
-    v.transmissionRate = 0.3; // low transmission rate
-    v.recoveryRate = 0.2;
-    v.incubationPeriod = 3;
-    // no as input
-    v.efficiency = 50;
-    v.vac = 21;
-    v.iso = 1;
-    v.rateVac = 100;
-    v.contactRate = 5;
-    cout << fixed << setprecision(10) << (double)v.infectedPplAfterNDays(15)<<endl;
-    cout << v.recoveredPplAfterNVacDays(15,2)<<endl;
-
+    int ch;
+    cout << "0 -> User input"<<endl;
+    cout << "1 -> Presets will be used"<<endl;
+    cin >> ch;
+    if(ch==0) prompt();
+ 
+    if(ch==1){
+        
+    }
 
     cout << endl;    
+
 }    
     
     
