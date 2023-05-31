@@ -7,8 +7,7 @@ class States{
     unsigned long initPop;
 
 };  
-int genData(){
-    States s[64];
+int genData(States s[]){
     s[0].Name = "Andhra Pradesh";
     s[0].birthRate = 16.8;
     s[0].deathRate = 7.1;

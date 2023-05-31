@@ -5,14 +5,87 @@
 #include <cstring>
 #include <sstream>
 #include <vector>
-//#include "States.h"
+#include "States.h"
+#include "Diseases.h"
 using namespace std;
 
 class popVars {
 public:
     int initialPopulation;
-    double birthRate;
-    double deathRate;
+    long double birthRate;
+    long double deathRate;
+    long finalPopulation;
+
+    long double getFinalPopulation()
+    {   
+        return initialPopulation + (initialPopulation * (birthRate - deathRate) / 1000);
+        finalPopulation = initialPopulation + (initialPopulation * (birthRate - deathRate) / 1000);
+    }
+    
+
+bool isValidDate(const std::string& dateStr) {
+    int day, month, year;
+
+    // Extract day, month, and year from the date string
+    if (sscanf(dateStr.c_str(), "%d/%d/%d", &day, &month, &year) != 3)
+       return false;
+
+    // Check if the year is valid
+    if (year < 1 || year > 9999)
+        return false;
+
+    // Check if the month is valid
+    if (month < 1 || month > 12)
+        return false;
+
+    // Get the maximum number of days in the month
+    int daysInMonth = 31;
+    if (month == 2) {
+        if ((year % 4 == 0 && year % 100 != 0) || (year % 400 == 0))
+            daysInMonth = 29;
+        else
+            daysInMonth = 28;
+        }
+    else if (month == 4 || month == 6 || month == 9 || month == 11) {
+        daysInMonth = 30;
+    }
+
+    // Check if the day is valid
+    if (day < 1 || day > daysInMonth) {
+        return false;
+    }
+
+    return true;
+}
+
+double getPopulationOnValidDate() {
+    string date;
+    bool isValid = false; // Initialize isValid to true
+    while (!isValid) {
+    cout << "Enter a date (DD/MM/YYYY): ";
+    getline(cin, date);
+    //cin.ignore(); // Clear the input buffer
+    isValid = isValidDate(date);
+    }   
+
+    int day, month, year;
+    sscanf(date.c_str(), "%d/%d/%d", &day, &month, &year);
+
+    int daysInMonth[12] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+    if ((year % 4 == 0 && year % 100 != 0) || (year % 400 == 0))
+        daysInMonth[1] = 29;
+
+    int totalDays = 0;
+    for (int i = 1; i < month; i++)
+        totalDays += daysInMonth[i - 1];
+    totalDays += day;
+
+    double popRatio = getFinalPopulation() / (double)(popVars::initialPopulation);
+
+    double ratePerDay = 365 * (pow(popRatio, 0.00273972603) - 1); // This float is 1.0/365
+    return popVars::initialPopulation * pow((1 + ratePerDay / 365.0), totalDays);
+}
+
     popVars(){
         initialPopulation = 0;
         birthRate = 0;
@@ -75,22 +148,6 @@ double getFinalPopulation(int x, float b, float d)
         return x + (x * (b - d) / 1000);
     }
 
-double getPopulationOnDate(int day, int month, int year)
-    {
-
-        int daysInMonth[12] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
-        if ((year % 4 == 0 && year % 100 != 0) || (year % 400 == 0))
-            int daysInMonth[12] = {31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
-        int totalDays = 0;
-        for (int i = 1; i < month; i++)
-            totalDays += daysInMonth[i - 1];
-        totalDays += day;
-
-        double popRatio = (double)(getFinalPopulation() / (double)v.initialPopulation);
-
-        double ratePerDay = 365 * (pow((double)(getFinalPopulation() / (double)v.initialPopulation), 0.00273972603) - 1); // this float is 1.0/365
-        return v.initialPopulation * pow((1 + ratePerDay / 365.0), totalDays);
-    }
 
 unsigned long ValidateInitPop() {
     string input;
@@ -108,6 +165,7 @@ unsigned long ValidateInitPop() {
             }
         }
         cout << "Enter valid initial population." << endl;
+        cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Clear the input buffer
     }
      // v.initialPopulation = initPop;
     return initPop;
@@ -130,6 +188,7 @@ double ValidateBirthRate() {
             }
         }
         cout << "Enter valid birth rate." << endl;
+        cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Clear the input buffer
     }
     return br;
 }
@@ -150,6 +209,7 @@ double ValidateDeathRate() {
             }
         }
         cout << "Enter valid death rate." << endl;
+        cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Clear the input buffer
     }
     return dr;
 }
@@ -162,7 +222,7 @@ int ValidateInfday1() {
         getline(cin, input);
         stringstream ss(input);
         if (ss >> infday1) {
-            if (infday1 >= 0) { // Validate the birth rate range && >= pop
+            if (infday1 >= 0 && infday1<=v.initialPopulation) { // Validate the birth rate range && >= pop
                 char remaining;
                 if (!(ss >> remaining)) {
                     break; // No remaining characters, valid input
@@ -170,6 +230,7 @@ int ValidateInfday1() {
             }
         }
         cout << "Enter proper no of ppl who are infected on day 1:" << endl;
+        cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Clear the input buffer
     }
     return infday1;
 }
@@ -190,6 +251,7 @@ double ValidateTransRate() {
             }
         }
         cout << "Enter valid transmission rate." << endl;
+        cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Clear the input buffer
     }
     return tr;
 }
@@ -209,6 +271,7 @@ double ValidateRecRate() {
             }
         }
         cout << "Enter valid recovery rate." << endl;
+        cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Clear the input buffer
     }
     return rr;
 }
@@ -230,6 +293,7 @@ int ValidateIncPrd() {
             }
         }
         cout << "Enter valid incubation period:" << endl;
+        cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Clear the input buffer
     }
     return incprd;
 }
@@ -250,6 +314,7 @@ double ValidateContRate() {
             }
         }
         cout << "Enter valid contact rate:" << endl;
+        cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Clear the input buffer
     }
     return contactRate;
 }
@@ -270,6 +335,7 @@ int ValidateIso() {
             }
         }
         cout << "Enter valid no of days before isolation:" << endl;
+        //cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Clear the input buffer
     }
     return iso;
 }
@@ -290,6 +356,7 @@ int ValidateVac() {
             }
         }
         cout << "Enter valid no. of days when vaccine is invented: " << endl;
+        //cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Clear the input buffer
     }
     return vac;
 }
@@ -310,6 +377,7 @@ float ValidateEff() {
             }
         }
         cout << "Enter valid efficiency: " << endl;
+        //cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Clear the input buffer
     }
     return eff;
 }
@@ -330,9 +398,11 @@ float ValidateRateOfVac() {
             }
         }
         cout << "Enter proper rate of vaccination: " << endl;
+        //cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Clear the input buffer
     }
     return rateVac;
 }
+
 void prompt(){
     char userInput;
     do{
@@ -351,22 +421,45 @@ void prompt(){
             break;
         }
         else if(userInput=='n' || userInput=='N'){
-            /*
-            // get stateName and diseaseName
-
+            States s[65];
             float br, dr;
             unsigned long ip;
+            genData(s);
+            cout << "Enter state name: ";            
             string stateinp;
-            for(int i=0;i<62;i++){
+            cin >> stateinp;
+            for(int i=0;i<=62;i++){
                 if(stateinp==s[i].Name){
-                    float br=s[i].birthRate;
-                    float dr = s[i].deathRate;
-                    unsigned long ip = s[i].initPop;
+                    br=s[i].birthRate;
+                    dr = s[i].deathRate;
+                    ip = s[i].initPop;
                 }
-            cout << br << dr << ip;
+                //else cout << "State not present in database"<<endl;
             }
+             // cout << "Birth rate is " << br;
+            v.birthRate = br;
+            v.deathRate = dr;
+            v.initialPopulation = ip;
+
+            Diseases d[105];
+            genDiseases(d);
+            double tr, recr;
+            int inc;
+            cout << "Enter disease name (or ICD ID): ";
+            string diseaseName;
+            cin >> diseaseName;
+            for(int i=0;i<=101;i++){
+                if(diseaseName==d[i].Disease){
+                    tr = d[i].TransRate;
+                    recr = d[i].RecRate;
+                    inc = d[i].IncPeriod;
+                }
+            }
+            v.transmissionRate = tr;
+            v.recoveryRate = recr;
+            v.incubationPeriod = inc;
+
             break;
-            */
         }
         
         else cout << "Enter Y/N "<<endl;
@@ -374,21 +467,18 @@ void prompt(){
     } while(true);
 }
 
-void mandatory(){
-     
-}
-
 int main() {
     prompt();
-    v.contactRate = ValidateContRate();
-    v.iso = ValidateIso();
-    v.vac = ValidateVac();
-    v.efficiency = ValidateEff();
-    v.rateVac = ValidateRateOfVac();
+    //v.contactRate = ValidateContRate();
+    //v.iso = ValidateIso();
+    //v.vac = ValidateVac();
+    //v.efficiency = ValidateEff();
+    //v.rateVac = ValidateRateOfVac();
     //getPopulationOnDate(12,12,2023);
     //double deathRate = ValidateDeathRate();
     //int infectedDay1 = ValidateInfday1();
     //double transmissionRate = ValidateTransRate();
-    cout << v.iso << endl << v. efficiency;
+    //cout << "Enter date: ";
+    cout << fixed << v.getPopulationOnValidDate();
     return 0;
 }
