@@ -18,27 +18,29 @@ public:
 
     long double getFinalPopulation()
     {   
-        return initialPopulation + (initialPopulation * (birthRate - deathRate) / 1000);
         finalPopulation = initialPopulation + (initialPopulation * (birthRate - deathRate) / 1000);
+        return initialPopulation + (initialPopulation * (birthRate - deathRate) / 1000); 
     }
     
 
-bool isValidDate(const std::string& dateStr) {
+bool isValidDate(const std::string dateStr) {
     int day, month, year;
 
     // Extract day, month, and year from the date string
-    if (sscanf(dateStr.c_str(), "%d/%d/%d", &day, &month, &year) != 3)
-       return false;
+    if (sscanf(dateStr.c_str(), "%d-%d-%d", &day, &month, &year) != 3){
 
-    // Check if the year is valid
+        cout << day<<endl;
+        cout << month<<endl;
+        cout << year<<endl;
+    
+          return false;
+    }
+
     if (year < 1 || year > 9999)
         return false;
-
-    // Check if the month is valid
     if (month < 1 || month > 12)
         return false;
 
-    // Get the maximum number of days in the month
     int daysInMonth = 31;
     if (month == 2) {
         if ((year % 4 == 0 && year % 100 != 0) || (year % 400 == 0))
@@ -46,6 +48,7 @@ bool isValidDate(const std::string& dateStr) {
         else
             daysInMonth = 28;
         }
+        
     else if (month == 4 || month == 6 || month == 9 || month == 11) {
         daysInMonth = 30;
     }
@@ -496,14 +499,9 @@ double recoveredPplAfterNVacDays(int no)
 
 
 int main() {
-    // prompt();
+    prompt();
     v.contactRate = ValidateContRate();
-    // v.iso = ValidateIso();
-    // v.vac = ValidateVac();
-    // v.efficiency = ValidateEff();
-    // v.rateVac = ValidateRateOfVac();
-    
-    // cout << fixed << infectedPplAfterNDays(v.nthDay()) << "\n";
-    //cout << fixed << recoveredPplAfterNVacDays(v.nthDay()) << "\n";
+    cout << fixed << infectedPplAfterNDays(v.nthDay()) << "\n";
+    cout << fixed << recoveredPplAfterNVacDays(v.nthDay()) << "\n";
     return 0;
 }
