@@ -265,7 +265,6 @@ void prompt2(){
 }
 void prompt(){
     char userInput;
-    userInput = 'y';
     /*
     y or Y or RETURN -> enter custom input
     n or N -> use default values from States.h and Diseases.h
@@ -277,60 +276,70 @@ void prompt(){
   
     cout << "Do you want to enter custom values? (y/n) ";
     cin >> userInput;
-    while (userInput != 'y' && userInput != 'Y' && userInput != 'n' && userInput != 'N' && userInput != 'q' && userInput != 'Q'){
+    while (userInput != 'y' && userInput != 'Y' && userInput != 'n' && userInput != 'N'){
         cout << "Invalid input. Enter again: ";
         cin >> userInput;
     }
 
-
-
     if (userInput == 'y' || userInput == 'Y' || userInput == '\n'){
         cout << "Enter initial population: ";
         cin >> v.initialPopulation;
-        while (!isValidInitialPopulation(v.initialPopulation)){
+        while (cin.fail() || !isValidInitialPopulation(v.initialPopulation)){
             cout << "Invalid initial population. Enter again: ";
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
             cin >> v.initialPopulation;
-            break;
+            // break;
         }
 
         cout << "Enter birth rate: ";
         cin >> v.birthRate;
-        while (!isValidBirthRate(v.birthRate)){
+        while (cin.fail() || !isValidBirthRate(v.birthRate)){
             cout << "Invalid birth rate. Enter again: ";
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
             cin >> v.birthRate;
-            break;
+            // break;
         }
 
         cout << "Enter death rate: ";
         cin >> v.deathRate;
-        while (!isValidBirthRate(v.deathRate)){
+        while (cin.fail() || isValidBirthRate(v.deathRate)){
             cout << "Invalid death rate. Enter again: ";
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
             cin >> v.deathRate;
-            break;
+            // break;
         }
 
          cout << "Enter transmission rate: ";
         cin >> v.transRate;
-        while (!isValidTransRate(v.transRate)){
+        while (cin.fail() || !isValidTransRate(v.transRate)){
             cout << "Invalid transmission rate. Enter again: ";
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
             cin >> v.transRate;
-            break;
+            // break;
         }
 
         cout << "Enter recovery rate: ";
         cin >> v.recRate;
-        while (!isValidTransRate(v.recRate)){
+        while (cin.fail() || !isValidTransRate(v.recRate)){
             cout << "Invalid recovery rate. Enter again: ";
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
             cin >> v.recRate;
-            break;
+            // break;
         }
 
         cout << "Enter incubation period: ";
         cin >> v.incubationPeriod;
-        while (!isValidInitialPopulation(v.incubationPeriod)){
+        while (cin.fail() || !isValidInitialPopulation(v.incubationPeriod)){
             cout << "Invalid incubation period. Enter again: ";
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
             cin >> v.incubationPeriod;
-            break;
+            // break;
         }
 
         }
@@ -383,6 +392,7 @@ int ask(){
     while (choice !='1' || choice !='2' || choice !='3' || choice !='4' || choice !='5' || choice !='6' || choice !='7' || choice !='8' || choice !='9'){
         cout << "Invalid choice. Enter again: ";
         cin >> choice;
+        break;
     }
 
     if (choice == 1){
