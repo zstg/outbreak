@@ -4,8 +4,8 @@
 #include <string>
 #include <ctype.h>
 
-#include "/home/stig/Git/outbreak/States.h"
-#include "/home/stig/Git/outbreak/Diseases.h"
+#include "States.h"
+#include "Diseases.h"
 
 using namespace std;
 States s[65];
@@ -223,6 +223,8 @@ void prompt2(){
         cin >> v.infDay1;
         while (v.infDay1 > v.initialPopulation){ // greater than final pop??
             cout << "Invalid no of people infected on day 1. Enter again: ";
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
             cin >> v.infDay1;
         }
 
@@ -230,6 +232,8 @@ void prompt2(){
         cin >> v.isolationPeriod;
         while (!isValidInitialPopulation(v.isolationPeriod)){
             cout << "Invalid isolation period. Enter again: ";
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
             cin >> v.isolationPeriod;
         }
 
@@ -237,6 +241,8 @@ void prompt2(){
         cin >> v.efficiency;
         while (!isValidEff(v.efficiency)){
             cout << "Invalid efficiency of vaccine. Enter again: ";
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
             cin >> v.efficiency;
         }
 
@@ -244,6 +250,8 @@ void prompt2(){
         cin >> v.rateOfVac;
         while (!isValidRateOfVac(v.rateOfVac)){
             cout << "Invalid rate of vaccination. Enter again: ";
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
             cin >> v.rateOfVac;
         }
 
@@ -251,6 +259,8 @@ void prompt2(){
         cin >> v.noOfDaysAfterOnsetWhenVacWasDiscovered;
         while (!isValidInitialPopulation(v.noOfDaysAfterOnsetWhenVacWasDiscovered)){
             cout << "Invalid no of days after onset when vaccine was discovered. Enter again: ";
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
             cin >> v.noOfDaysAfterOnsetWhenVacWasDiscovered;
         }
 
@@ -258,6 +268,8 @@ void prompt2(){
         cin >> v.contRate;
         while (!isValidContRate(v.contRate)){
             cout << "Invalid contact rate. Enter again: ";
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
             cin >> v.contRate;
         }
 
