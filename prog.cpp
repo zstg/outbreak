@@ -2,6 +2,7 @@
 #include <iomanip>
 #include <cmath>
 #include <string>
+#include <algorithm>
 #include <ctype.h>
 
 #include "States.h"
@@ -10,6 +11,15 @@
 using namespace std;
 States s[65];
 Diseases d[105];
+
+char change_case (char c) {
+        return std::tolower(c); 
+}
+
+string lower(string str) {
+    transform(str.begin(), str.end(), str.begin(), change_case);
+    return str;
+}
 
 bool isValidDate(int dd, int mm, int yyyy){
     if (mm < 1 || mm > 12 || yyyy < 0 || yyyy>9999 ||  dd < 1 || dd > 31)
@@ -149,6 +159,12 @@ bool isValidInitialPopulation(int initialPopulation){
 }
 
 
+bool isValidInfDay1(int infDay1){
+    if (infDay1 < 0 && infDay1 > getFinalPopulation())
+        return false;
+    return true;
+}
+
 // REUSE THIS FUNCTION FOR DEATH RATE CHECKING (even tho stupid name)
 bool isValidBirthRate(double birthRate){
     if (birthRate < 0 && birthRate > 1000)
@@ -185,7 +201,7 @@ bool isValidContRate(double contRate){
 
 bool isState(string state){
     for(int i=0;i<65;i++){
-        if(state==s[i].Name) // s has already been defined at the beginning of the program
+        if(lower(state)==lower(s[i].Name)) // s has already been defined at the beginning of the program
             return true;
     }
     return false;
@@ -193,7 +209,7 @@ bool isState(string state){
 
 bool isDis(string dis){
     for(int i=0;i<105;i++){
-        if(dis==d[i].Disease) // d has already been defined at the beginning of the program
+        if(lower(dis)==lower(d[i].Disease)) // d has already been defined at the beginning of the program
             return true;
     }
     return false;
@@ -221,7 +237,7 @@ void prompt2(){
 
         cout << "Enter no of people infected on day 1: ";
         cin >> v.infDay1;
-        while (v.infDay1 > v.initialPopulation){ // greater than final pop??
+        while (cin.fail() || !isValidInitialPopulation(v.initialPopulation) || v.infDay1<0){ // greater than final pop??
             cout << "Invalid no of people infected on day 1. Enter again: ";
             cin.clear();
             cin.ignore(numeric_limits<streamsize>::max(), '\n');
@@ -230,7 +246,7 @@ void prompt2(){
 
         cout << "Enter isolation period: ";
         cin >> v.isolationPeriod;
-        while (!isValidInitialPopulation(v.isolationPeriod)){
+        while (cin.fail()||!isValidInitialPopulation(v.isolationPeriod)){
             cout << "Invalid isolation period. Enter again: ";
             cin.clear();
             cin.ignore(numeric_limits<streamsize>::max(), '\n');
@@ -239,7 +255,7 @@ void prompt2(){
 
         cout << "Enter efficiency of vaccine: ";
         cin >> v.efficiency;
-        while (!isValidEff(v.efficiency)){
+        while (cin.fail()||!isValidEff(v.efficiency)){
             cout << "Invalid efficiency of vaccine. Enter again: ";
             cin.clear();
             cin.ignore(numeric_limits<streamsize>::max(), '\n');
@@ -248,7 +264,7 @@ void prompt2(){
 
         cout << "Enter rate of vaccination: ";
         cin >> v.rateOfVac;
-        while (!isValidRateOfVac(v.rateOfVac)){
+        while (cin.fail()||!isValidRateOfVac(v.rateOfVac)){
             cout << "Invalid rate of vaccination. Enter again: ";
             cin.clear();
             cin.ignore(numeric_limits<streamsize>::max(), '\n');
@@ -257,7 +273,7 @@ void prompt2(){
 
         cout << "Enter no of days after onset when vaccine was discovered: ";
         cin >> v.noOfDaysAfterOnsetWhenVacWasDiscovered;
-        while (!isValidInitialPopulation(v.noOfDaysAfterOnsetWhenVacWasDiscovered)){
+        while (cin.fail()||!isValidInitialPopulation(v.noOfDaysAfterOnsetWhenVacWasDiscovered)){
             cout << "Invalid no of days after onset when vaccine was discovered. Enter again: ";
             cin.clear();
             cin.ignore(numeric_limits<streamsize>::max(), '\n');
@@ -266,7 +282,7 @@ void prompt2(){
 
         cout << "Enter contact rate: ";
         cin >> v.contRate;
-        while (!isValidContRate(v.contRate)){
+        while (cin.fail()||!isValidContRate(v.contRate)){
             cout << "Invalid contact rate. Enter again: ";
             cin.clear();
             cin.ignore(numeric_limits<streamsize>::max(), '\n');
@@ -276,7 +292,6 @@ void prompt2(){
 
 }
 void prompt(){
-    char userInput;
     /*
     y or Y or RETURN -> enter custom input
     n or N -> use default values from States.h and Diseases.h
@@ -285,18 +300,18 @@ void prompt(){
     ask them for the initial population, birth rate, death rate, transmission rate, recovery rate, incubation period.
     In case even 1 of these is invalid, ask them to enter that value again till they enter a valid value.
    */
-  
+    string userInput;
     cout << "Do you want to enter custom values? (y/n) ";
     cin >> userInput;
-    while (userInput != 'y' && userInput != 'Y' && userInput != 'n' && userInput != 'N'){
+    while (userInput != "y" && userInput != "Y" && userInput != "n" && userInput != "N"){
         cout << "Invalid input. Enter again: ";
         cin >> userInput;
     }
 
-    if (userInput == 'y' || userInput == 'Y' || userInput == '\n'){
+    if (userInput == "y" || userInput == "Y" || userInput == "\n"){
         cout << "Enter initial population: ";
         cin >> v.initialPopulation;
-        while (cin.fail() || !isValidInitialPopulation(v.initialPopulation)){
+        while (!isValidInitialPopulation(v.initialPopulation)){
             cout << "Invalid initial population. Enter again: ";
             cin.clear();
             cin.ignore(numeric_limits<streamsize>::max(), '\n');
@@ -356,7 +371,7 @@ void prompt(){
 
         }
 
-    else if(userInput=='n' || userInput=='N'){
+    else if(userInput=="n" || userInput=="N"){
         genData(s);
         genDiseases(d);
         string stateinp, disinp;
@@ -401,7 +416,7 @@ int ask(){
     int choice;
     cout << "Enter your choice [1-8], 9 to quit: ";
     cin >> choice;
-    while (choice !='1' || choice !='2' || choice !='3' || choice !='4' || choice !='5' || choice !='6' || choice !='7' || choice !='8' || choice !='9'){
+    while (choice !=1 || choice !=2 || choice !=3 || choice !=4 || choice !=5 || choice !=6 || choice !=7 || choice !=8 || choice !=9){
         cout << "Invalid choice. Enter again: ";
         cin >> choice;
         break;
@@ -501,12 +516,10 @@ return 0;
 
 int main(){
     prompt();
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
     prompt2();
-    printmenu();
-    cout << fixed << v.infectedAfterNDays(0)<<endl;
-    cout << fixed << v.recoveredAfterNDays(0)<<endl;
-    cout << fixed << v.recoveredAfterNDays(1)<<endl;
-    cout << fixed << v.recoveredAfterNDays(2)<<endl;
+    // printmenu();
+    
     ask();  
 
 
