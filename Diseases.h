@@ -18,7 +18,7 @@ int genDiseases(Diseases d[]){
     d[1].RecRate = 0.32;
     d[1].IncPeriod = 3;
 
-    d[2].Disease = "Common flu";
+    d[2].Disease = "Common_flu";
     d[2].TransRate = 0.29;
     d[2].RecRate = 0.32;
     d[2].IncPeriod = 3;
@@ -68,7 +68,7 @@ int genDiseases(Diseases d[]){
     d[11].RecRate = 0.293;
     d[11].IncPeriod = 18;
 
-    d[12].Disease = "Hepatitis B";
+    d[12].Disease = "Hepatitis_B";
     d[12].TransRate = 0.07;
     d[12].RecRate = 0.31;
     d[12].IncPeriod = 50;
@@ -123,12 +123,12 @@ int genDiseases(Diseases d[]){
     d[22].RecRate = 0;
     d[22].IncPeriod = 90;
 
-    d[23].Disease = "Human Immunodeficiency Virus";
+    d[23].Disease = "Human_Immunodeficiency_Virus";
     d[23].TransRate = 0.0001;
     d[23].RecRate = 0;
     d[23].IncPeriod = 90;
 
-    d[24].Disease = "Acquired Immunodeficiency Syndrome";
+    d[24].Disease = "Acquired_Immunodeficiency_Syndrome";
     d[24].TransRate = 0.0001;
     d[24].RecRate = 0;
     d[24].IncPeriod = 90;
@@ -163,12 +163,12 @@ int genDiseases(Diseases d[]){
     d[30].RecRate = 0.16;
     d[30].IncPeriod = 7;
 
-    d[31].Disease = "Ebola virus";
+    d[31].Disease = "Ebola_virus";
     d[31].TransRate = 0.22;
     d[31].RecRate = 0.16;
     d[31].IncPeriod = 7;
 
-    d[32].Disease = "Ebola hemorrhagic fever";
+    d[32].Disease = "Ebola_hemorrhagic_fever";
     d[32].TransRate = 0.22;
     d[32].RecRate = 0.16;
     d[32].IncPeriod = 7;
@@ -183,12 +183,12 @@ int genDiseases(Diseases d[]){
     d[34].RecRate = 0.125;
     d[34].IncPeriod = 8;
 
-    d[35].Disease = "Middle East Respiratory Syndrome";
+    d[35].Disease = "Middle_East_Respiratory_Syndrome";
     d[35].TransRate = 0.22;
     d[35].RecRate = 0.125;
     d[35].IncPeriod = 8;
 
-    d[36].Disease = "MERS coronavirus";
+    d[36].Disease = "MERS_coronavirus";
     d[36].TransRate = 0.22;
     d[36].RecRate = 0.125;
     d[36].IncPeriod = 8;
@@ -213,7 +213,7 @@ int genDiseases(Diseases d[]){
     d[40].RecRate = 0.316;
     d[40].IncPeriod = 10;
 
-    d[41].Disease = "Measles virus";
+    d[41].Disease = "Measles_virus";
     d[41].TransRate = 0.31;
     d[41].RecRate = 0.316;
     d[41].IncPeriod = 10;
@@ -228,17 +228,17 @@ int genDiseases(Diseases d[]){
     d[43].RecRate = 0.32;
     d[43].IncPeriod = 18;
 
-    d[44].Disease = "German measles";
+    d[44].Disease = "German_measles";
     d[44].TransRate = 0.2;
     d[44].RecRate = 0.32;
     d[44].IncPeriod = 18;
 
-    d[45].Disease = "Three-day measles";
+    d[45].Disease = "Three-day_measles";
     d[45].TransRate = 0.2;
     d[45].RecRate = 0.32;
     d[45].IncPeriod = 18;
 
-    d[46].Disease = "Three day measles";
+    d[46].Disease = "Three_day_measles";
     d[46].TransRate = 0.2;
     d[46].RecRate = 0.32;
     d[46].IncPeriod = 18;
@@ -253,12 +253,12 @@ int genDiseases(Diseases d[]){
     d[48].RecRate = 0.32;
     d[48].IncPeriod = 7;
 
-    d[49].Disease = "Bordetella pertussis";
+    d[49].Disease = "Bordetella_pertussis";
     d[49].TransRate = 0.28;
     d[49].RecRate = 0.32;
     d[49].IncPeriod = 7;
 
-    d[50].Disease = "Whooping cough";
+    d[50].Disease = "Whooping_cough";
     d[50].TransRate = 0.28;
     d[50].RecRate = 0.32;
     d[50].IncPeriod = 7;
@@ -268,7 +268,7 @@ int genDiseases(Diseases d[]){
     d[51].RecRate = 0.32;
     d[51].IncPeriod = 7;
 
-    d[52].Disease = "Dengue fever";
+    d[52].Disease = "Dengue_fever";
     d[52].TransRate = 0.11;
     d[52].RecRate = 0.23;
     d[52].IncPeriod = 5;
@@ -283,12 +283,12 @@ int genDiseases(Diseases d[]){
     d[54].RecRate = 0.23;
     d[54].IncPeriod = 5;
 
-    d[55].Disease = "Meningococcal meningitis";
+    d[55].Disease = "Meningococcal_meningitis";
     d[55].TransRate = 0.083;
     d[55].RecRate = 0.2;
     d[55].IncPeriod = 3.5;
 
-    d[56].Disease = "Bacterial meningitis";
+    d[56].Disease = "Bacterial_meningitis";
     d[56].TransRate = 0.083;
     d[56].RecRate = 0.2;
     d[56].IncPeriod = 3.5;
@@ -303,12 +303,12 @@ int genDiseases(Diseases d[]){
     d[58].RecRate =0.2;
     d[58].IncPeriod =3.5;
 
-    d[59].Disease = "Typhoid fever";
+    d[59].Disease = "Typhoid_fever";
     d[59].TransRate = 0.25;
     d[59].RecRate = 0.32;
     d[59].IncPeriod = 10;
 
-    d[60].Disease = "Typhoid";
+    d[60].Disease = "Typhoid_fever";
     d[60].TransRate = 0.25;
     d[60].RecRate = 0.32;
     d[60].IncPeriod = 10;
@@ -318,7 +318,7 @@ int genDiseases(Diseases d[]){
     d[61].RecRate = 0.32;
     d[61].IncPeriod = 10;
 
-    d[62].Disease = "Salmonella typhi";
+    d[62].Disease = "Typhoid";
     d[62].TransRate = 0.25;
     d[62].RecRate = 0.32;
     d[62].IncPeriod = 10;
@@ -328,7 +328,7 @@ int genDiseases(Diseases d[]){
     d[63].RecRate = 0.4;
     d[63].IncPeriod = 8;
 
-    d[64].Disease = "Salmonella typhi";
+    d[64].Disease = "Salmonella_typhi";
     d[64].TransRate = 0.33;
     d[64].RecRate = 0.4;
     d[64].IncPeriod = 8;
@@ -368,7 +368,7 @@ int genDiseases(Diseases d[]){
     d[71].RecRate = 0.32;
     d[71].IncPeriod = 5;
 
-    d[72].Disease = "COVID 19";
+    d[72].Disease = "COVID_19";
     d[72].TransRate = 0.4;
     d[72].RecRate = 0.32;
     d[72].IncPeriod = 5;
@@ -378,7 +378,7 @@ int genDiseases(Diseases d[]){
     d[73].RecRate = 0.32;
     d[73].IncPeriod = 5;
 
-    d[74].Disease = "Severe Acute Respiratory Syndrome Coronavirus 2";
+    d[74].Disease = "Severe_Acute_Respiratory_Syndrome_Coronavirus_2";
     d[74].TransRate = 0.4;
     d[74].RecRate = 0.3;
     d[74].IncPeriod = 5;
@@ -388,12 +388,12 @@ int genDiseases(Diseases d[]){
     d[75].RecRate = 0.3;
     d[75].IncPeriod = 5;
 
-    d[76].Disease = "SARS CoV 2";
+    d[76].Disease = "SARS_CoV_2";
     d[76].TransRate = 0.4;
     d[76].RecRate = 0.3;
     d[76].IncPeriod = 5;
 
-    d[77].Disease = "Spanish flu";
+    d[77].Disease = "Spanish_flu";
     d[77].TransRate = 0.4;
     d[77].RecRate = 0.13;
     d[77].IncPeriod = 5;
@@ -493,7 +493,7 @@ int genDiseases(Diseases d[]){
     d[96].RecRate = 0.28;
     d[96].IncPeriod = 1;
 
-    d[97].Disease = "Swine flu";
+    d[97].Disease = "Swine_flu";
     d[97].TransRate = 0.45;
     d[97].RecRate = 0.28;
     d[97].IncPeriod = 1;

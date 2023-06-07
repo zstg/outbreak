@@ -8,7 +8,7 @@ class States{
 
 };  
 int genData(States s[]){
-    s[0].Name = "Andhra Pradesh";
+    s[0].Name = "Andhra_Pradesh";
     s[0].birthRate = 16.8;
     s[0].deathRate = 7.1;
     s[0].initPop = 53000000;
@@ -18,7 +18,7 @@ int genData(States s[]){
     s[1].deathRate = 7.1;
     s[1].initPop = 53000000;
 
-    s[2].Name = "Arunachal Pradesh";
+    s[2].Name = "Arunachal_Pradesh";
     s[2].birthRate = 18.8;
     s[2].deathRate = 6.0;
     s[2].initPop = 1000000;
@@ -68,7 +68,7 @@ int genData(States s[]){
     s[11].deathRate = 16.4;
     s[11].initPop = 20000000;
 
-    s[12].Name = "New Delhi";
+    s[12].Name = "New_Delhi";
     s[12].birthRate = 16.4;
     s[12].deathRate = 16.4;
     s[12].initPop = 20000000;
@@ -103,7 +103,7 @@ int genData(States s[]){
     s[18].deathRate = 6.1;
     s[18].initPop = 30000000;
 
-    s[19].Name = "Himachal Pradesh";
+    s[19].Name = "Himachal_Pradesh";
     s[19].birthRate = 16.3;
     s[19].deathRate = 6.6;
     s[19].initPop = 7000000;
@@ -113,7 +113,7 @@ int genData(States s[]){
     s[20].deathRate = 6.6;
     s[20].initPop = 7000000;
 
-    s[21].Name = "Jammu and Kashmir";
+    s[21].Name = "Jammu_and_Kashmir";
     s[21].birthRate = 16.2;
     s[21].deathRate = 4.9;
     s[21].initPop = 15000000;
@@ -153,7 +153,7 @@ int genData(States s[]){
     s[28].deathRate = 6.6;
     s[28].initPop = 35000000;
 
-    s[29].Name = "Madhya Pradesh";
+    s[29].Name = "Madhya_Pradesh";
     s[29].birthRate = 25.5;
     s[29].deathRate = 7.5;
     s[29].initPop = 86000000;
@@ -258,7 +258,7 @@ int genData(States s[]){
     s[49].deathRate = 5.0;
     s[49].initPop = 700000;
 
-    s[50].Name = "Tamil Nadu";
+    s[50].Name = "Tamil_Nadu";
     s[50].birthRate = 15.2;
     s[50].deathRate = 6.7;
     s[50].initPop = 83000000;
@@ -273,7 +273,7 @@ int genData(States s[]){
     s[52].deathRate = 6.5;
     s[52].initPop = 41000000;
 
-    s[53].Name = "Telangana State";
+    s[53].Name = "Telangana_State";
     s[53].birthRate = 17.8;
     s[53].deathRate = 6.5;
     s[53].initPop = 41000000;
@@ -293,7 +293,7 @@ int genData(States s[]){
     s[56].deathRate = 5.2;
     s[56].initPop = 4000000;
 
-    s[57].Name = "Uttar Pradesh";
+    s[57].Name = "Uttar_Pradesh";
     s[57].birthRate = 26.7;
     s[57].deathRate = 7.2;
     s[57].initPop = 241000000;
@@ -313,7 +313,7 @@ int genData(States s[]){
     s[60].deathRate = 6.4;
     s[60].initPop = 10000000;
 
-    s[61].Name = "West Bengal";
+    s[61].Name = "West_Bengal";
     s[61].birthRate = 15.5;
     s[61].deathRate = 5.9;
     s[61].initPop = 104000000;

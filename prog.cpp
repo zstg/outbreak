@@ -12,16 +12,19 @@ using namespace std;
 States s[65];
 Diseases d[105];
 
-char change_case (char c) {
-        return std::tolower(c); 
+char changeCase (char c) {
+    // this function converts a character to lowercase
+    return std::tolower(c); 
 }
 
 string lower(string str) {
-    transform(str.begin(), str.end(), str.begin(), change_case);
+    // uses changeCase to convert to lowercase
+    transform(str.begin(), str.end(), str.begin(), changeCase);
     return str;
 }
 
 bool isValidDate(int dd, int mm, int yyyy){
+    // returns True if a date is valid; performs date checks
     if (mm < 1 || mm > 12 || yyyy < 0 || yyyy>9999 ||  dd < 1 || dd > 31)
         return false;
     int daysInMonth = 31;
@@ -36,7 +39,7 @@ bool isValidDate(int dd, int mm, int yyyy){
     return (dd >= 1 && dd <= daysInMonth);
     }
 
-string datefromdays(int n){
+string dateFromDays(int n){
    // take nth day as an arg, return the date in dd/mm/yyyy format
     int daysInMonth[12] = {31,28,31,30,31,30,31,31,30,31,30,31};
     int dd, mm, yyyy;
@@ -135,12 +138,6 @@ public:
     int isolationPeriod;
     float rateOfVac;
 
-    // double recoveredAfterNDays(int n){ // INT VAC?
-    // if((infDay1 * pow(1-transRate, n*recRate)) + infDay1 * transRate * recRate * pow(1+efficiency, n+noOfDaysAfterOnsetWhenVacWasDiscovered-(isolationPeriod+incubationPeriod)*contRate)- rateOfVac * noOfDaysAfterOnsetWhenVacWasDiscovered * efficiency * pow(infDay1*transRate*(1-recRate) ,n+noOfDaysAfterOnsetWhenVacWasDiscovered-(isolationPeriod+incubationPeriod)*contRate -1) > getFinalPopulation())
-    //     return getFinalPopulation();
-    // else
-    //     return (infDay1 * pow(1-transRate, n*recRate)) + infDay1 * transRate * recRate * pow(1+efficiency, n+noOfDaysAfterOnsetWhenVacWasDiscovered-(isolationPeriod+incubationPeriod)*contRate) - rateOfVac * noOfDaysAfterOnsetWhenVacWasDiscovered * efficiency * pow(infDay1*transRate*(1-recRate) ,n+noOfDaysAfterOnsetWhenVacWasDiscovered-(isolationPeriod+incubationPeriod)*contRate -1); 
-    // }
     double recoveredAfterNDays(int n){ // INT VAC?
     long res = ((n-noOfDaysAfterOnsetWhenVacWasDiscovered-isolationPeriod))* pow(n-noOfDaysAfterOnsetWhenVacWasDiscovered-isolationPeriod,recRate/transRate)*pow(rateOfVac,1.1+efficiency)/100;
     if(n<noOfDaysAfterOnsetWhenVacWasDiscovered+isolationPeriod)
@@ -148,7 +145,6 @@ public:
     else if(res > getFinalPopulation())
         return getFinalPopulation();
     else
-        // return (infDay1 * pow(1-transRate, n*recRate)) + infDay1 * transRate * recRate * pow(1+efficiency, n+noOfDaysAfterOnsetWhenVacWasDiscovered-(isolationPeriod+incubationPeriod)*contRate) - rateOfVac * noOfDaysAfterOnsetWhenVacWasDiscovered * efficiency * pow(infDay1*transRate*(1-recRate) ,n+noOfDaysAfterOnsetWhenVacWasDiscovered-(isolationPeriod+incubationPeriod)*contRate -1); 
         return res;
     }
 };
@@ -158,55 +154,59 @@ double getFinalPopulation(){
         return v.initialPopulation + (v.initialPopulation * (v.birthRate - v.deathRate) / 1000);
     }
 
-// Validate initial population
+
 bool isValidInitialPopulation(int initialPopulation){
+    // Validate initial population
     if (initialPopulation < 0 && initialPopulation > getFinalPopulation())
         return false;
     return true;
 }
 
-
 bool isValidInfDay1(int infDay1){
+    // Validate initially infected citizens
     if (infDay1 < 0 && infDay1 > getFinalPopulation())
         return false;
     return true;
 }
 
-// REUSE THIS FUNCTION FOR DEATH RATE CHECKING (even tho stupid name)
+
 bool isValidBirthRate(double birthRate){
+    // Validate birth/death rate
     if (birthRate < 0 && birthRate > 1000)
         return false;
     return true;
 }
 
-// reuse this for recovery rate checking and efficiency checking
+
 bool isValidTransRate(double transRate){
+    // Validate transmission rate/ recovery rate
     if (transRate <0 && transRate > 1) // <=, >= ??
         return false;
     return true;
 }
 bool isValidEff(double eff){
+    // Validate efficiency
     if (eff <0 && eff > 100) // <=, >= ??
         return false;
     return true;
 }
 bool isValidRateOfVac(float rateOfVac){
-    // vac has to also be lesser than no of days after onset -> taken care of
+    // Validate rate of vaccination
     if (rateOfVac < 0 && rateOfVac > 1) // verify that no of ppl vaccinated < final population
         return false;
     return true;
 }
 
-// REUSE this for isolation period checking and vaccination rate
 
 bool isValidContRate(double contRate){
+    // Validate contact rate
     if (contRate < 0 || contRate > 2) // 1 person can pass the disease to ANY no of ppl, but this has a practical limit
         return false;
     return true;
 }
 
-
 bool isState(string state){
+    // returns true if state is pres in header
     for(int i=0;i<65;i++){
         if(lower(state)==lower(s[i].Name)) // s has already been defined at the beginning of the program
             return true;
@@ -215,6 +215,7 @@ bool isState(string state){
 }
 
 bool isDis(string dis){
+    // returns true if disease is present in header
     for(int i=0;i<105;i++){
         if(lower(dis)==lower(d[i].Disease)) // d has already been defined at the beginning of the program
             return true;
@@ -223,6 +224,7 @@ bool isDis(string dis){
 }
 
 int diff(int a, int b){
+    // function created for a purpose
     if(a>b){
         return a-b;
     }
@@ -232,27 +234,28 @@ int diff(int a, int b){
 }
 
 int printmenu(){
+    // simple function to print interactive menu
     cout << endl;
-    cout << "1. Infected people on a given date: "<<endl; // inf-rec
+    cout << "1. Infected people on a given date: "<<endl;
     cout << "2. Infected percentage of ppl"<<endl;
     cout << "3. Date when the entire city recovers"<<endl;
     // cout << "4. Date when the entire city is infected"; // too negative
     cout << "4. New cases on a given date"<<endl;
     cout << "5. Rate change on a given date"<<endl;
-    cout << "6. Number of affected, infected and recovered people from day 1"<<endl; // include on 1 graph
+    cout << "6. Number of affected, infected and recovered people from day 1"<<endl; 
     cout << "7. Print this menu"<<endl;
     cout << "8. Perform all operations"<<endl;
     cout << "9. Quit"<<endl; // or q,Q
 
-return 0;    
-}
+    return 0;    
+  }
 
 void prompt2(){
     // this is a common prompt for all the functions
 
         cout << "Enter no of people infected on day 1: ";
         cin >> v.infDay1;
-        while (cin.fail() || !isValidInitialPopulation(v.initialPopulation) || v.infDay1<0){ // greater than final pop??
+        while (cin.fail() || !isValidInitialPopulation(v.initialPopulation) || v.infDay1<0){
             cout << "Invalid no of people infected on day 1. Enter again: ";
             cin.clear();
             cin.ignore(numeric_limits<streamsize>::max(), '\n');
@@ -306,24 +309,16 @@ void prompt2(){
 
 
 }
-void prompt(){
-    /*
-    y or Y or RETURN -> enter custom input
-    n or N -> use default values from States.h and Diseases.h
-    */
-   /* if the user enters y, 
-    ask them for the initial population, birth rate, death rate, transmission rate, recovery rate, incubation period.
-    In case even 1 of these is invalid, ask them to enter that value again till they enter a valid value.
-   */
+void prompt1(){
     string userInput;
-    cout << "Do you want to enter custom values? (y/n) ";
+    cout << "Do you want to enter custom values? (n uses inputs) ";
     cin >> userInput;
-    while (userInput != "y" && userInput != "Y" && userInput != "n" && userInput != "N"){
+    while (lower(userInput)!="yes" && lower(userInput)!="no" && lower(userInput)!="y" && lower(userInput)!="n"){
         cout << "Invalid input. Enter again: ";
         cin >> userInput;
     }
 
-    if (userInput == "y" || userInput == "Y" || userInput == "\n"){
+    if (lower(userInput) == "y" || lower(userInput) == "yes" || userInput == "\n"){
         cout << "Enter initial population: ";
         cin >> v.initialPopulation;
         while (!isValidInitialPopulation(v.initialPopulation)){
@@ -331,7 +326,6 @@ void prompt(){
             cin.clear();
             cin.ignore(numeric_limits<streamsize>::max(), '\n');
             cin >> v.initialPopulation;
-            // break;
         }
 
         cout << "Enter birth rate: ";
@@ -341,7 +335,6 @@ void prompt(){
             cin.clear();
             cin.ignore(numeric_limits<streamsize>::max(), '\n');
             cin >> v.birthRate;
-            // break;
         }
 
         cout << "Enter death rate: ";
@@ -351,7 +344,6 @@ void prompt(){
             cin.clear();
             cin.ignore(numeric_limits<streamsize>::max(), '\n');
             cin >> v.deathRate;
-            // break;
         }
 
          cout << "Enter transmission rate: ";
@@ -361,7 +353,6 @@ void prompt(){
             cin.clear();
             cin.ignore(numeric_limits<streamsize>::max(), '\n');
             cin >> v.transRate;
-            // break;
         }
 
         cout << "Enter recovery rate: ";
@@ -371,7 +362,6 @@ void prompt(){
             cin.clear();
             cin.ignore(numeric_limits<streamsize>::max(), '\n');
             cin >> v.recRate;
-            // break;
         }
 
         cout << "Enter incubation period: ";
@@ -381,19 +371,18 @@ void prompt(){
             cin.clear();
             cin.ignore(numeric_limits<streamsize>::max(), '\n');
             cin >> v.incubationPeriod;
-            // break;
         }
 
-        }
+    }
 
-    else if(userInput=="n" || userInput=="N"){
+    else if(lower(userInput)=="no" || lower(userInput)=="n"){
         genData(s);
         genDiseases(d);
         string stateinp, disinp;
         double br, dr;
         unsigned long ip;
 
-        cout << "Enter the state name: ";
+        cout << "Enter the state name (eg: Tamil_Nadu): ";
         cin >> stateinp;
         while (!isState(stateinp)){
             cout << "State is not in database. Enter a different one: ";
@@ -408,7 +397,7 @@ void prompt(){
                 }
             }
 
-        cout << "Enter the disease name: ";
+        cout << "Enter the disease name: "; // _ works here too
         cin >> disinp;
         while (!isDis(disinp)){
             cout << "Disease is not in database. Enter a different one: ";
@@ -422,22 +411,21 @@ void prompt(){
                 v.incubationPeriod = d[i].IncPeriod;
                 }
             }
-
-        
         }
 }
 
 int ask(){
-    int choice;
-    cout << "Enter your choice [1-8], 9 to quit: ";
+    string choice;
+    while(true){
+    cout << "Enter your choice [1-8], 8 for menu, 9 to quit: ";
     cin >> choice;
-    while (choice !=1 && choice !=2 && choice !=3 && choice !=4 && choice !=5 && choice !=6 && choice !=7 && choice !=8 && choice !=9){
+    while (choice !="1" && choice !="2" && choice !="3" && choice !="4" && choice !="5" && choice !="6" && choice !="7" && choice !="8" && choice !="9" && choice!="m" && choice!="q"){
         cout << "Invalid choice. Enter again: ";
         cin >> choice;
         break;
     }
 
-    if (choice == 1){
+    if (choice == "1"){
         int dd, mm, yyyy;
         cout << "Enter the date in dd/mm/yyyy format: ";
         cin >> dd >> mm >> yyyy;
@@ -446,11 +434,11 @@ int ask(){
             cin >> dd >> mm >> yyyy;
         }
         long flag = v.infectedAfterNDays(v.nthDay(dd, mm, yyyy)) - v.recoveredAfterNDays(v.nthDay(dd, mm, yyyy));
-        // no of infected ppl on that date - no of recovered on that date
+                    // no of infected ppl on that date - no of recovered on that date
         if(flag<0) cout << "Zero";
         else cout << "The number of infected people on " << dd << "/" << mm << "/" << yyyy << " is " << fixed << v.infectedAfterNDays(v.nthDay(dd, mm, yyyy)) - v.recoveredAfterNDays(v.nthDay(dd, mm, yyyy)) << endl;
     }
-    if (choice == 2){
+    if (choice == "2"){
         int dd, mm, yyyy;
         cout << "Enter the date in dd/mm/yyyy format: ";
         cin >> dd >> mm >> yyyy;
@@ -461,17 +449,15 @@ int ask(){
         long flag = v.infectedAfterNDays(v.nthDay(dd, mm, yyyy)) - v.recoveredAfterNDays(v.nthDay(dd, mm, yyyy));
         cout << "The percentage of infected people on " << dd << "/" << mm << "/" << yyyy << " is " << (v.infectedAfterNDays(v.nthDay(dd, mm, yyyy)) - v.recoveredAfterNDays(v.nthDay(dd, mm, yyyy))) / getFinalPopulation() * 100 << "%" << endl;
     }
-     if (choice == 3){
-         // for loop from 1 to 1000000 (say). practically, infected(i) - recovered(i) cannot be zero. so when we do infected(i) - recovered(i) we'll get values for all integers beyond a certain point.
-         // stop the loop at the exact point when it reaches zero or goes below it
+     if (choice == "3"){
          for(int i=1;i<1000000;i++){
              if(v.infectedAfterNDays(i) - v.recoveredAfterNDays(i) <= 0){
-                 cout << "The city recovers on " << datefromdays(i) << endl;
+                 cout << "The city recovers on " << dateFromDays(i) << endl;
                  break;
              }
          }
     }
-    if (choice == 4){
+    if (choice == "4"){
         int dd, mm, yyyy;
         cout << "Enter the date in dd/mm/yyyy format: ";
         cin >> dd >> mm >> yyyy;
@@ -479,11 +465,9 @@ int ask(){
             cout << "Invalid date. Enter again: ";
             cin >> dd >> mm >> yyyy;
         }
-        // if date 
         cout << "The number of new cases on " << dd << "/" << mm << "/" << yyyy << " is " << (v.infectedAfterNDays(v.nthDay(dd-1,mm,yyyy)) -v.recoveredAfterNDays(v.nthDay(dd-1,mm,yyyy)))-(v.infectedAfterNDays(v.nthDay(dd-2,mm,yyyy)) -v.recoveredAfterNDays(v.nthDay(dd-2,mm,yyyy))) << endl;
-        // TODO: fix this for 1st dates -> rewrite the nth day function to start from 1/1/70, include years for calc.
     }
-    if (choice == 5){
+    if (choice == "5"){
         int dd, mm, yyyy;
         cout << "Enter the date in dd/mm/yyyy format: ";
         cin >> dd >> mm >> yyyy;
@@ -494,7 +478,7 @@ int ask(){
         cout << "The rate of change on " << dd << "/" << mm << "/" << yyyy << " is " << ((v.infectedAfterNDays(v.nthDay(dd-1,mm,yyyy)) -v.recoveredAfterNDays(v.nthDay(dd-1,mm,yyyy)))-(v.infectedAfterNDays(v.nthDay(dd-2,mm,yyyy)) -v.recoveredAfterNDays(v.nthDay(dd-2,mm,yyyy))))/ ((v.infectedAfterNDays(v.nthDay(dd-2,mm,yyyy)) - v.recoveredAfterNDays(v.nthDay(dd-2,mm,yyyy)))) * 100 << "% more than the previous day"<< endl;
     }
 
-    if(choice==6){
+    if(choice=="6"){
         int nodays;
         cout << "Enter the number of days for which you want to get the data for: ";
         cin >> nodays;
@@ -507,10 +491,10 @@ int ask(){
         }
     }
 
-    if(choice==7){
+    if(choice=="7")
         printmenu();
-    }
-    if(choice==8){
+
+    if(choice=="8" || choice == "m"){
         int dd, mm, yyyy;
         cout << "Enter the date in dd/mm/yyyy format: ";
         cin >> dd >> mm >> yyyy;
@@ -518,32 +502,38 @@ int ask(){
             cout << "Invalid date. Enter again: ";
             cin >> dd >> mm >> yyyy;
         }
-        // no of infected ppl on that date - no of recovered on that date
+        // 1. no of infected ppl on that date - no of recovered on that date
         cout << "The number of infected people on " << dd << "/" << mm << "/" << yyyy << " is " << v.infectedAfterNDays(v.nthDay(dd, mm, yyyy)) - v.recoveredAfterNDays(v.nthDay(dd, mm, yyyy)) << endl;
-        // 2. Infected percentage of ppl"<<endl;
+
+        // 2. Infected percentage of ppl
         cout << "The percentage of infected people on " << dd << "/" << mm << "/" << yyyy << " is " << (v.infectedAfterNDays(v.nthDay(dd, mm, yyyy)) - v.recoveredAfterNDays(v.nthDay(dd, mm, yyyy))) / getFinalPopulation() * 100 << "%" << endl;
-        // 3. Date when the entire city recovers"<<endl;
+
+        // 3. Date when the entire city recovers
         for(int i=1;i<1000000;i++){
              if(v.infectedAfterNDays(i) - v.recoveredAfterNDays(i) <= 0){
-                 cout << "The city recovers on " << datefromdays(i) << endl;
+                 cout << "The city recovers on " << dateFromDays(i) << endl;
                  break;
-             }
+            }
          }
-        // 4. New cases on a given date"<<endl;
+
+        // 4. New cases on a given date
         cout << "The number of new cases on " << dd << "/" << mm << "/" << yyyy << " is " << (v.infectedAfterNDays(v.nthDay(dd-1,mm,yyyy)) -v.recoveredAfterNDays(v.nthDay(dd-1,mm,yyyy)))-(v.infectedAfterNDays(v.nthDay(dd-2,mm,yyyy)) -v.recoveredAfterNDays(v.nthDay(dd-2,mm,yyyy))) << endl;
-        // 5. Rate change on a given date"<<endl;
+
+        // 5. Rate change on a given date
         cout << "The rate of change on " << dd << "/" << mm << "/" << yyyy << " is " << ((v.infectedAfterNDays(v.nthDay(dd-1,mm,yyyy)) -v.recoveredAfterNDays(v.nthDay(dd-1,mm,yyyy)))-(v.infectedAfterNDays(v.nthDay(dd-2,mm,yyyy)) -v.recoveredAfterNDays(v.nthDay(dd-2,mm,yyyy))))/ ((v.infectedAfterNDays(v.nthDay(dd-2,mm,yyyy)) - v.recoveredAfterNDays(v.nthDay(dd-2,mm,yyyy)))) * 100 << "% more than the previous day"<< endl;
-        // 6. Graph of affected, infected and recovered people"<<endl; // include on 1 graph
-    }
-    if(choice==9){
+
+      }
+
+    if(choice=="9" || choice=="q"){
         cout << "Thank you for using our program!" << endl;
-        //exit(0);
+        exit(0);
+        }
     }
 return 0;
 }
 
 int main(){
-    prompt();
+    prompt1();
     prompt2();
     printmenu();
     ask();  
