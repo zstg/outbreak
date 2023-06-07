@@ -53,3 +53,7 @@ No of days for complete recovery: $(Inf_d)$ := $(Rec_d)$
 #+begin_comment
 We're assuming that the disease leaves as quickly as it comes!!!
 #+end_comment
+#+begin_export html
+<iframe width="560" height="315" src="https://www.youtube.com/embed/%s" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+#+end_export
+

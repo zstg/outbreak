@@ -82,7 +82,7 @@ public:
 
     }
 
-    long double getFinalPopulation(){ // this func shdn't take any args
+    long getFinalPopulation(){ // this func shdn't take any args
         return initialPopulation + (initialPopulation * (birthRate - deathRate) / 1000);
         finalPopulation = initialPopulation + (initialPopulation * (birthRate - deathRate) / 1000);
     }
@@ -122,27 +122,36 @@ public:
     double transRate, recRate, contRate;
     int incubationPeriod;
 
-    double infectedAfterNDays(int n){
-        if(infDay1 * pow(1+transRate,n*contRate) < getFinalPopulation())
-            return infDay1 * pow(1+transRate,n*contRate);
+    long infectedAfterNDays(int n){
+        if(infDay1 + pow(1+contRate,n*1.1*transRate/recRate) < initialPopulation)
+            return infDay1 + pow(1+contRate,n*1.1*transRate/recRate);
         else
             return getFinalPopulation();
-    }
+        }
 };
 
 class Vac:public Dis{
 public:
     float efficiency;
     int noOfDaysAfterOnsetWhenVacWasDiscovered;
-    int vac=noOfDaysAfterOnsetWhenVacWasDiscovered;
     int isolationPeriod;
     float rateOfVac;
 
+    // double recoveredAfterNDays(int n){ // INT VAC?
+    // if((infDay1 * pow(1-transRate, n*recRate)) + infDay1 * transRate * recRate * pow(1+efficiency, n+noOfDaysAfterOnsetWhenVacWasDiscovered-(isolationPeriod+incubationPeriod)*contRate)- rateOfVac * noOfDaysAfterOnsetWhenVacWasDiscovered * efficiency * pow(infDay1*transRate*(1-recRate) ,n+noOfDaysAfterOnsetWhenVacWasDiscovered-(isolationPeriod+incubationPeriod)*contRate -1) > getFinalPopulation())
+    //     return getFinalPopulation();
+    // else
+    //     return (infDay1 * pow(1-transRate, n*recRate)) + infDay1 * transRate * recRate * pow(1+efficiency, n+noOfDaysAfterOnsetWhenVacWasDiscovered-(isolationPeriod+incubationPeriod)*contRate) - rateOfVac * noOfDaysAfterOnsetWhenVacWasDiscovered * efficiency * pow(infDay1*transRate*(1-recRate) ,n+noOfDaysAfterOnsetWhenVacWasDiscovered-(isolationPeriod+incubationPeriod)*contRate -1); 
+    // }
     double recoveredAfterNDays(int n){ // INT VAC?
-    if((infDay1 * pow(1-transRate, n*recRate)) + infDay1 * transRate * recRate * pow(1+efficiency, n+vac-(isolationPeriod+incubationPeriod)*contRate)- rateOfVac * vac * efficiency * pow(infDay1*transRate*(1-recRate) ,n+vac-(isolationPeriod+incubationPeriod)*contRate -1) > getFinalPopulation())
+    long res = ((n-noOfDaysAfterOnsetWhenVacWasDiscovered-isolationPeriod))* pow(n-noOfDaysAfterOnsetWhenVacWasDiscovered-isolationPeriod,recRate/transRate)*pow(rateOfVac,1.1+efficiency)/100;
+    if(n<noOfDaysAfterOnsetWhenVacWasDiscovered+isolationPeriod)
+        return 0;
+    else if(res > getFinalPopulation())
         return getFinalPopulation();
     else
-        return (infDay1 * pow(1-transRate, n*recRate)) + infDay1 * transRate * recRate * pow(1+efficiency, n+vac-(isolationPeriod+incubationPeriod)*contRate) - rateOfVac * vac * efficiency * pow(infDay1*transRate*(1-recRate) ,n+vac-(isolationPeriod+incubationPeriod)*contRate -1); 
+        // return (infDay1 * pow(1-transRate, n*recRate)) + infDay1 * transRate * recRate * pow(1+efficiency, n+noOfDaysAfterOnsetWhenVacWasDiscovered-(isolationPeriod+incubationPeriod)*contRate) - rateOfVac * noOfDaysAfterOnsetWhenVacWasDiscovered * efficiency * pow(infDay1*transRate*(1-recRate) ,n+noOfDaysAfterOnsetWhenVacWasDiscovered-(isolationPeriod+incubationPeriod)*contRate -1); 
+        return res;
     }
 };
 
@@ -386,7 +395,7 @@ void prompt(){
         }
         // if state is in database, get the birth rate, death rate and initial population and assign to the state
         for(int i=0;i<62;i++){
-            if(stateinp==s[i].Name){
+            if(lower(stateinp)==lower(s[i].Name)){
                 v.birthRate = s[i].birthRate;
                 v.deathRate = s[i].deathRate;
                 v.initialPopulation = s[i].initPop;
@@ -401,7 +410,7 @@ void prompt(){
             }
         // if disease is in database, get the transmission rate, recovery rate and incubation period and assign to the disease
         for(int i=0;i<105;i++){
-            if(disinp==d[i].Disease){
+            if(lower(disinp)==lower(d[i].Disease)){
                 v.transRate = d[i].TransRate;
                 v.recRate = d[i].RecRate;
                 v.incubationPeriod = d[i].IncPeriod;
@@ -516,12 +525,20 @@ return 0;
 
 int main(){
     prompt();
-    cin.ignore(numeric_limits<streamsize>::max(), '\n');
-    prompt2();
+    // cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    // prompt2();
     // printmenu();
-    
-    ask();  
 
+    v.infDay1=10;
+    v.isolationPeriod=2;
+    v.efficiency=0.65;
+    v.rateOfVac=1000;
+    v.noOfDaysAfterOnsetWhenVacWasDiscovered=5;
+    v.contRate=1.1;
+    for(int i=0;i<400;i++){
+        cout<< fixed << "Day " << i<< "- Infected:" << v.infectedAfterNDays(i) << "\tAnd recovered: "<< (int)v.recoveredAfterNDays(i) << endl;
+    }
+    //ask();  
 
 return 0;     
 }
