@@ -43,7 +43,7 @@ string datefromdays(int n){
     if (n <= 31){
         dd = n;
         mm = 1;
-        yyyy = 0;
+        yyyy = 2023;
     }
     else{
         int i = 0;
@@ -53,10 +53,8 @@ string datefromdays(int n){
         }
         dd = n;
         mm = i + 1;
-        yyyy = 0;
+        yyyy = 2023;
     }
-    cout << dd <<  mm << yyyy << endl;
-
     // make it return a string
     string date = to_string(dd) + "/" + to_string(mm) + "/" + to_string(yyyy);
     return date;
@@ -224,6 +222,15 @@ bool isDis(string dis){
     return false;
 }
 
+int diff(int a, int b){
+    if(a>b){
+        return a-b;
+    }
+    else{
+        return 0;
+    }
+}
+
 int printmenu(){
     cout << endl;
     cout << "1. Infected people on a given date: "<<endl; // inf-rec
@@ -232,11 +239,10 @@ int printmenu(){
     // cout << "4. Date when the entire city is infected"; // too negative
     cout << "4. New cases on a given date"<<endl;
     cout << "5. Rate change on a given date"<<endl;
-    cout << "6. Graph of affected, infected and recovered people"<<endl; // include on 1 graph
+    cout << "6. Number of affected, infected and recovered people from day 1"<<endl; // include on 1 graph
     cout << "7. Print this menu"<<endl;
     cout << "8. Perform all operations"<<endl;
     cout << "9. Quit"<<endl; // or q,Q
-    cout << endl;
 
 return 0;    
 }
@@ -425,7 +431,7 @@ int ask(){
     int choice;
     cout << "Enter your choice [1-8], 9 to quit: ";
     cin >> choice;
-    while (choice !=1 || choice !=2 || choice !=3 || choice !=4 || choice !=5 || choice !=6 || choice !=7 || choice !=8 || choice !=9){
+    while (choice !=1 && choice !=2 && choice !=3 && choice !=4 && choice !=5 && choice !=6 && choice !=7 && choice !=8 && choice !=9){
         cout << "Invalid choice. Enter again: ";
         cin >> choice;
         break;
@@ -453,7 +459,7 @@ int ask(){
             cin >> dd >> mm >> yyyy;
         }
         long flag = v.infectedAfterNDays(v.nthDay(dd, mm, yyyy)) - v.recoveredAfterNDays(v.nthDay(dd, mm, yyyy));
-        cout << "The percentage of infected people on " << dd << "/" << mm << "/" << yyyy << " is " << (v.infectedAfterNDays(v.nthDay(dd, mm, yyyy)) - v.recoveredAfterNDays(v.nthDay(dd, mm, yyyy))) / getFinalPopulation() * 100 << endl;
+        cout << "The percentage of infected people on " << dd << "/" << mm << "/" << yyyy << " is " << (v.infectedAfterNDays(v.nthDay(dd, mm, yyyy)) - v.recoveredAfterNDays(v.nthDay(dd, mm, yyyy))) / getFinalPopulation() * 100 << "%" << endl;
     }
      if (choice == 3){
          // for loop from 1 to 1000000 (say). practically, infected(i) - recovered(i) cannot be zero. so when we do infected(i) - recovered(i) we'll get values for all integers beyond a certain point.
@@ -474,7 +480,7 @@ int ask(){
             cin >> dd >> mm >> yyyy;
         }
         // if date 
-        cout << "The number of new cases on " << dd << "/" << mm << "/" << yyyy << " is " << (v.infectedAfterNDays(v.nthDay(dd,mm,yyyy)) -v.recoveredAfterNDays(v.nthDay(dd,mm,yyyy)))-(v.infectedAfterNDays(v.nthDay(dd-1,mm,yyyy)) -v.recoveredAfterNDays(v.nthDay(dd-1,mm,yyyy))) << endl;
+        cout << "The number of new cases on " << dd << "/" << mm << "/" << yyyy << " is " << (v.infectedAfterNDays(v.nthDay(dd-1,mm,yyyy)) -v.recoveredAfterNDays(v.nthDay(dd-1,mm,yyyy)))-(v.infectedAfterNDays(v.nthDay(dd-2,mm,yyyy)) -v.recoveredAfterNDays(v.nthDay(dd-2,mm,yyyy))) << endl;
         // TODO: fix this for 1st dates -> rewrite the nth day function to start from 1/1/70, include years for calc.
     }
     if (choice == 5){
@@ -485,7 +491,20 @@ int ask(){
             cout << "Invalid date. Enter again: ";
             cin >> dd >> mm >> yyyy;
         }
-        cout << "The rate of change on " << dd << "/" << mm << "/" << yyyy << " is " << (v.infectedAfterNDays(v.nthDay(dd,mm,yyyy)) -v.recoveredAfterNDays(v.nthDay(dd,mm,yyyy)))-(v.infectedAfterNDays(v.nthDay(dd-1,mm,yyyy)) -v.recoveredAfterNDays(v.nthDay(dd-1,mm,yyyy)))/ ((v.infectedAfterNDays(v.nthDay(dd,mm,yyyy)) - v.recoveredAfterNDays(v.nthDay(dd-1,mm,yyyy)))) * 100 << endl;
+        cout << "The rate of change on " << dd << "/" << mm << "/" << yyyy << " is " << ((v.infectedAfterNDays(v.nthDay(dd-1,mm,yyyy)) -v.recoveredAfterNDays(v.nthDay(dd-1,mm,yyyy)))-(v.infectedAfterNDays(v.nthDay(dd-2,mm,yyyy)) -v.recoveredAfterNDays(v.nthDay(dd-2,mm,yyyy))))/ ((v.infectedAfterNDays(v.nthDay(dd-2,mm,yyyy)) - v.recoveredAfterNDays(v.nthDay(dd-2,mm,yyyy)))) * 100 << "% more than the previous day"<< endl;
+    }
+
+    if(choice==6){
+        int nodays;
+        cout << "Enter the number of days for which you want to get the data for: ";
+        cin >> nodays;
+        while(cin.fail() || nodays<0){
+            cout << "Enter valid no of days: ";
+            cin >> nodays;
+        }
+        for(int i=0;i<nodays;i++){
+            cout<< fixed << "Day " << i +1 << "- Infected:" << v.infectedAfterNDays(i) << ", recovered: "<< (int)v.recoveredAfterNDays(i) << ", currently infected people: " << diff(v.infectedAfterNDays(i),v.recoveredAfterNDays(i)) << endl;
+        }
     }
 
     if(choice==7){
@@ -502,7 +521,7 @@ int ask(){
         // no of infected ppl on that date - no of recovered on that date
         cout << "The number of infected people on " << dd << "/" << mm << "/" << yyyy << " is " << v.infectedAfterNDays(v.nthDay(dd, mm, yyyy)) - v.recoveredAfterNDays(v.nthDay(dd, mm, yyyy)) << endl;
         // 2. Infected percentage of ppl"<<endl;
-        cout << "The percentage of infected people on " << dd << "/" << mm << "/" << yyyy << " is " << (v.infectedAfterNDays(v.nthDay(dd, mm, yyyy)) - v.recoveredAfterNDays(v.nthDay(dd, mm, yyyy))) / getFinalPopulation() * 100 << endl;
+        cout << "The percentage of infected people on " << dd << "/" << mm << "/" << yyyy << " is " << (v.infectedAfterNDays(v.nthDay(dd, mm, yyyy)) - v.recoveredAfterNDays(v.nthDay(dd, mm, yyyy))) / getFinalPopulation() * 100 << "%" << endl;
         // 3. Date when the entire city recovers"<<endl;
         for(int i=1;i<1000000;i++){
              if(v.infectedAfterNDays(i) - v.recoveredAfterNDays(i) <= 0){
@@ -511,9 +530,9 @@ int ask(){
              }
          }
         // 4. New cases on a given date"<<endl;
-        cout << "The number of new cases on " << dd << "/" << mm << "/" << yyyy << " is " << (v.infectedAfterNDays(v.nthDay(dd,mm,yyyy)) -v.recoveredAfterNDays(v.nthDay(dd,mm,yyyy)))-(v.infectedAfterNDays(v.nthDay(dd-1,mm,yyyy)) -v.recoveredAfterNDays(v.nthDay(dd-1,mm,yyyy))) << endl;
+        cout << "The number of new cases on " << dd << "/" << mm << "/" << yyyy << " is " << (v.infectedAfterNDays(v.nthDay(dd-1,mm,yyyy)) -v.recoveredAfterNDays(v.nthDay(dd-1,mm,yyyy)))-(v.infectedAfterNDays(v.nthDay(dd-2,mm,yyyy)) -v.recoveredAfterNDays(v.nthDay(dd-2,mm,yyyy))) << endl;
         // 5. Rate change on a given date"<<endl;
-        cout << "The rate of change on " << dd << "/" << mm << "/" << yyyy << " is " << (v.infectedAfterNDays(v.nthDay(dd,mm,yyyy)) -v.recoveredAfterNDays(v.nthDay(dd,mm,yyyy)))-(v.infectedAfterNDays(v.nthDay(dd-1,mm,yyyy)) -v.recoveredAfterNDays(v.nthDay(dd-1,mm,yyyy)))/ ((v.infectedAfterNDays(v.nthDay(dd,mm,yyyy)) - v.recoveredAfterNDays(v.nthDay(dd-1,mm,yyyy)))) * 100 << endl;
+        cout << "The rate of change on " << dd << "/" << mm << "/" << yyyy << " is " << ((v.infectedAfterNDays(v.nthDay(dd-1,mm,yyyy)) -v.recoveredAfterNDays(v.nthDay(dd-1,mm,yyyy)))-(v.infectedAfterNDays(v.nthDay(dd-2,mm,yyyy)) -v.recoveredAfterNDays(v.nthDay(dd-2,mm,yyyy))))/ ((v.infectedAfterNDays(v.nthDay(dd-2,mm,yyyy)) - v.recoveredAfterNDays(v.nthDay(dd-2,mm,yyyy)))) * 100 << "% more than the previous day"<< endl;
         // 6. Graph of affected, infected and recovered people"<<endl; // include on 1 graph
     }
     if(choice==9){
@@ -525,20 +544,21 @@ return 0;
 
 int main(){
     prompt();
-    // cin.ignore(numeric_limits<streamsize>::max(), '\n');
-    // prompt2();
-    // printmenu();
-
+    //prompt2();
+    printmenu();
+    
     v.infDay1=10;
     v.isolationPeriod=2;
-    v.efficiency=0.65;
-    v.rateOfVac=1000;
-    v.noOfDaysAfterOnsetWhenVacWasDiscovered=5;
-    v.contRate=1.1;
+    v.efficiency=0.7;
+    v.rateOfVac=1250;
+    v.noOfDaysAfterOnsetWhenVacWasDiscovered=33;
+    v.contRate=1.2;
+    /*
     for(int i=0;i<400;i++){
-        cout<< fixed << "Day " << i<< "- Infected:" << v.infectedAfterNDays(i) << "\tAnd recovered: "<< (int)v.recoveredAfterNDays(i) << endl;
+        cout<< fixed << "Day " << i +1 << "- Infected:" << v.infectedAfterNDays(i) << ", recovered: "<< (int)v.recoveredAfterNDays(i) << ", currently infected people: " << diff(v.infectedAfterNDays(i),v.recoveredAfterNDays(i)) << endl;
     }
-    //ask();  
+    */
+    ask();  
 
 return 0;     
 }
