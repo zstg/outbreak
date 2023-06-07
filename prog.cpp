@@ -544,20 +544,8 @@ return 0;
 
 int main(){
     prompt();
-    //prompt2();
+    prompt2();
     printmenu();
-    
-    v.infDay1=10;
-    v.isolationPeriod=2;
-    v.efficiency=0.7;
-    v.rateOfVac=1250;
-    v.noOfDaysAfterOnsetWhenVacWasDiscovered=33;
-    v.contRate=1.2;
-    /*
-    for(int i=0;i<400;i++){
-        cout<< fixed << "Day " << i +1 << "- Infected:" << v.infectedAfterNDays(i) << ", recovered: "<< (int)v.recoveredAfterNDays(i) << ", currently infected people: " << diff(v.infectedAfterNDays(i),v.recoveredAfterNDays(i)) << endl;
-    }
-    */
     ask();  
 
 return 0;     
