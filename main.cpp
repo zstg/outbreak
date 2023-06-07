@@ -14,7 +14,7 @@ Diseases d[105];
 
 char changeCase (char c) {
     // this function converts a character to lowercase
-    return std::tolower(c); 
+    return tolower(c); 
 }
 
 string lower(string str) {
@@ -236,16 +236,21 @@ int diff(int a, int b){
 int printmenu(){
     // simple function to print interactive menu
     cout << endl;
-    cout << "1. Infected people on a given date: "<<endl;
-    cout << "2. Infected percentage of ppl"<<endl;
-    cout << "3. Date when the entire city recovers"<<endl;
+    cout << "\t\t -------------------------------------------------------------------------------------"<<endl;
+    cout << "\t\t|                                       MAIN MENU                                     |"<<endl;
+    // cout << "\t\t  -----------------------------------------------------------------------------------"<<endl;
+    cout << "\t\t| 1. Infected people on a given date:                                                 |"<<endl;
+    cout << "\t\t| 2. Infected percentage of ppl                                                       |"<<endl;
+    cout << "\t\t| 3. Date when the entire city recovers                                               |"<<endl;
     // cout << "4. Date when the entire city is infected"; // too negative
-    cout << "4. New cases on a given date"<<endl;
-    cout << "5. Rate change on a given date"<<endl;
-    cout << "6. Number of affected, infected and recovered people from day 1"<<endl; 
-    cout << "7. Print this menu"<<endl;
-    cout << "8. Perform all operations"<<endl;
-    cout << "9. Quit"<<endl; // or q,Q
+    cout << "\t\t| 4. New cases on a given date                                                        |"<<endl;
+    cout << "\t\t| 5. Rate change on a given date                                                      |"<<endl;
+    cout << "\t\t| 6. Number of affected, infected and recovered people from day 1                     |"<<endl; 
+    cout << "\t\t| 7. Print this menu                                                                  |"<<endl;
+    cout << "\t\t| 8. Perform all operations                                                           |"<<endl;
+    cout << "\t\t| 9. Quit                                                                             |"<<endl; // or q,Q
+    cout << "\t\t -------------------------------------------------------------------------------------"<<endl;
+    cout<<endl;
 
     return 0;    
   }
@@ -417,7 +422,7 @@ void prompt1(){
 int ask(){
     string choice;
     while(true){
-    cout << "Enter your choice [1-8], 8 for menu, 9 to quit: ";
+    cout << "Enter your choice [1-8], 8/m for menu, 9/q to quit: ";
     cin >> choice;
     while (choice !="1" && choice !="2" && choice !="3" && choice !="4" && choice !="5" && choice !="6" && choice !="7" && choice !="8" && choice !="9" && choice!="m" && choice!="q"){
         cout << "Invalid choice. Enter again: ";
@@ -525,7 +530,8 @@ int ask(){
       }
 
     if(choice=="9" || choice=="q"){
-        cout << "Thank you for using our program!" << endl;
+        cout << "Thank you for using the program!" << endl;
+        cout << "PRs welcome at https://github.com/zstg/outbreak "<<"!!"<<endl;
         exit(0);
         }
     }
