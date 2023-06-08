@@ -109,53 +109,53 @@ int genDiseases(Diseases d[]){
     d[19].IncPeriod = 50;
 
     d[20].Disease = "HIV/AIDS";
-    d[20].TransRate = 0.0001;
-    d[20].RecRate = 0;
+    d[20].TransRate = 0.001;
+    d[20].RecRate = 0.000000000000000000000000000000000000000000000001;
     d[20].IncPeriod = 90;
 
     d[21].Disease = "HIV";
-    d[21].TransRate = 0.0001;
-    d[21].RecRate = 0;
+    d[21].TransRate = 0.001;
+    d[21].RecRate = 0.000000000000000000000000000000000000000000000001;
     d[21].IncPeriod = 90;
 
     d[22].Disease = "AIDS";
-    d[22].TransRate = 0.0001;
-    d[22].RecRate = 0;
+    d[22].TransRate = 0.001;
+    d[22].RecRate = 0.000000000000000000000000000000000000000000000001;
     d[22].IncPeriod = 90;
 
     d[23].Disease = "Human_Immunodeficiency_Virus";
-    d[23].TransRate = 0.0001;
-    d[23].RecRate = 0;
+    d[23].TransRate = 0.001;
+    d[23].RecRate = 0.000000000000000000000000000000000000000000000001;
     d[23].IncPeriod = 90;
 
     d[24].Disease = "Acquired_Immunodeficiency_Syndrome";
-    d[24].TransRate = 0.0001;
-    d[24].RecRate = 0;
+    d[24].TransRate = 0.001;
+    d[24].RecRate = 0.000000000000000000000000000000000000000000000001;
     d[24].IncPeriod = 90;
 
     d[25].Disease = "B20";
-    d[25].TransRate = 0.0001;
-    d[25].RecRate = 0;
+    d[25].TransRate = 0.001;
+    d[25].RecRate = 0.000000000000000000000000000000000000000000000001;
     d[25].IncPeriod = 90;
 
     d[26].Disease = "B21";
-    d[26].TransRate = 0.0001;
-    d[26].RecRate = 0;
+    d[26].TransRate = 0.001;
+    d[26].RecRate = 0.000000000000000000000000000000000000000000000001;
     d[26].IncPeriod = 90;
 
     d[27].Disease = "B22";
-    d[27].TransRate = 0.0001;
-    d[27].RecRate = 0;
+    d[27].TransRate = 0.001;
+    d[27].RecRate = 0.000000000000000000000000000000000000000000000001;
     d[27].IncPeriod = 90;
 
     d[28].Disease = "B23";
-    d[28].TransRate = 0.0001;
-    d[28].RecRate = 0;
+    d[28].TransRate = 0.001;
+    d[28].RecRate = 0.000000000000000000000000000000000000000000000001;
     d[28].IncPeriod = 90;
 
     d[29].Disease = "B24";
-    d[29].TransRate = 0.0001;
-    d[29].RecRate = 0;
+    d[29].TransRate = 0.001;
+    d[29].RecRate = 0.000000000000000000000000000000000000000000000001;
     d[29].IncPeriod = 90;
 
     d[30].Disease = "Ebola";
