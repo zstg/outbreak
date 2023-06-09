@@ -634,10 +634,10 @@ int ask(){
 }
 
 int main(){
-    // welcome();
-    // prompt1();
-    // prompt2();
-    // printmenu();
+    welcome();
+    prompt1();
+    prompt2();
+    printmenu();
     while(true)
         ask();
  
